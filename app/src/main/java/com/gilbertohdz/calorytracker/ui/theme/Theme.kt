@@ -7,6 +7,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import com.gilbertohdz.core_ui.*
 import com.gilbertohdz.core_ui.Dimensions
 import com.gilbertohdz.core_ui.LocalSpacing
 
