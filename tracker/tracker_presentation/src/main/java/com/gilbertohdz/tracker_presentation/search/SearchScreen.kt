@@ -1,12 +1,6 @@
 package com.gilbertohdz.tracker_presentation.search
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -23,14 +17,16 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gilbertohdz.core.R
+import coil.annotation.ExperimentalCoilApi
 import com.gilbertohdz.core.util.UiEvent
 import com.gilbertohdz.core_ui.LocalSpacing
 import com.gilbertohdz.tracker_domain.model.MealType
+import com.gilbertohdz.core.R
 import com.gilbertohdz.tracker_presentation.search.components.SearchTextField
 import com.gilbertohdz.tracker_presentation.search.components.TrackableFoodItem
 import java.time.LocalDate
 
+@ExperimentalCoilApi
 @ExperimentalComposeUiApi
 @Composable
 fun SearchScreen(
@@ -101,7 +97,7 @@ fun SearchScreen(
             ))
           },
           onTrack = {
-            keyboardController?.hide() // Hide keyword
+            keyboardController?.hide()
             viewModel.onEvent(
               SearchEvent.OnTrackFoodClick(
                 food = food.food,
@@ -114,20 +110,20 @@ fun SearchScreen(
         )
       }
     }
+  }
 
-    Box(
-      modifier = Modifier.fillMaxSize(),
-      contentAlignment = Alignment.Center
-    ) {
-      when {
-        state.isSearching -> CircularProgressIndicator()
-        state.trackableFood.isEmpty() -> {
-          Text(
-            text = stringResource(id = R.string.no_results),
-            style = MaterialTheme.typography.body1,
-            textAlign = TextAlign.Center
-          )
-        }
+  Box(
+    modifier = Modifier.fillMaxSize(),
+    contentAlignment = Alignment.Center
+  ) {
+    when {
+      state.isSearching -> CircularProgressIndicator()
+      state.trackableFood.isEmpty() -> {
+        Text(
+          text = stringResource(id = R.string.no_results),
+          style = MaterialTheme.typography.body1,
+          textAlign = TextAlign.Center
+        )
       }
     }
   }
