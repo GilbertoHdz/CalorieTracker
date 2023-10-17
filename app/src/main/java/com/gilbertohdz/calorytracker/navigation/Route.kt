@@ -1,4 +1,4 @@
-package com.gilbertohdz.core.navigation
+package com.gilbertohdz.calorytracker.navigation
 
 object Route {
   const val WELCOME = "welcome"

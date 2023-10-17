@@ -9,7 +9,6 @@ import com.gilbertohdz.core.domain.preferences.Preferences
 import com.gilbertohdz.core.util.UiEvent
 import com.gilbertohdz.core.R
 import com.gilbertohdz.core.domain.usecase.FilterOutDigits
-import com.gilbertohdz.core.navigation.Route
 import com.gilbertohdz.core.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -46,7 +45,7 @@ class AgeViewModel @Inject constructor(
         return@launch
       }
       preferences.saveAge(ageNumber)
-      _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+      _uiEvent.send(UiEvent.Success)
     }
   }
 }
