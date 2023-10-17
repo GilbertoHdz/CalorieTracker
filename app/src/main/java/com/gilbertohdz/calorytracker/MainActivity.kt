@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.gilbertohdz.calorytracker.navigation.navigate
 import com.gilbertohdz.calorytracker.ui.theme.CaloryTrackerTheme
+import com.gilbertohdz.core.domain.preferences.Preferences
 import com.gilbertohdz.core.navigation.Route
 import com.gilbertohdz.onboarding_presentation.activity.ActivityScreen
 import com.gilbertohdz.onboarding_presentation.age.AgeScreen
@@ -28,10 +29,14 @@ import com.gilbertohdz.onboarding_presentation.welcome.WelcomeScreen
 import com.gilbertohdz.tracker_presentation.search.SearchScreen
 import com.gilbertohdz.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @OptIn(ExperimentalComposeUiApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferences: Preferences
 
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +45,18 @@ class MainActivity : ComponentActivity() {
             CaloryTrackerTheme {
                 val navController = rememberNavController()
                 val scaffoldState = rememberScaffoldState()
+                val shouldShowOnboarding = preferences.loadShouldShowOnboarding()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState
                 ) {
 
-                    NavHost(navController = navController, startDestination = Route.WELCOME) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = if (shouldShowOnboarding) Route.WELCOME else Route.TRACKER_OVERVIEW
+                    ) {
+
                         composable(Route.WELCOME) {
                             WelcomeScreen(onNavigate = navController::navigate)
                         }
